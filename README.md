@@ -1,2 +1,2 @@
-# compony
-It is a simulation of compony management
+# company
+It is a simulation of company management
