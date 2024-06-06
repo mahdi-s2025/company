@@ -62,6 +62,7 @@ final class FullTimeEmployee extends Employee {
 
     public FullTimeEmployee(String fullName, String phoneNumber, Date employmentDate, int monthlySalaryRate) {
         super(fullName, phoneNumber, employmentDate);
+        uncountedWorkingDays = 0;
         this.monthlySalaryRate = monthlySalaryRate;
     }
 
@@ -90,4 +91,72 @@ final class FullTimeEmployee extends Employee {
     }
 }
 
+final class PartTimeEmployee extends Employee {
+    private int uncountedWorkingHours;
+    private final int dailySalaryRate;
 
+    public PartTimeEmployee(String fullName, String phoneNumber, Date employmentDate, int dailySalaryRate) {
+        super(fullName, phoneNumber, employmentDate);
+        uncountedWorkingHours = 0;
+        this.dailySalaryRate = dailySalaryRate;
+    }
+
+    @Override
+    public int getSalary() {
+        if (uncountedWorkingHours < 24) return 0;
+        uncountedWorkingHours -= 24;
+        return dailySalaryRate;
+    }
+
+    @Override
+    public void work(int amount) {
+        uncountedWorkingHours += amount;
+    }
+
+    public int getUncountedWorkingHours() {
+        return uncountedWorkingHours;
+    }
+
+    public void setUncountedWorkingHours(int uncountedWorkingHours) {
+        this.uncountedWorkingHours = uncountedWorkingHours;
+    }
+
+    public int getDailySalaryRate() {
+        return dailySalaryRate;
+    }
+}
+
+final class ProjectEmployee extends Employee {
+    private int uncountedCompleteProjects;
+    private final int projectSalaryRate;
+
+    public ProjectEmployee(String fullName, String phoneNumber, Date employmentDate, int projectSalaryRate) {
+        super(fullName, phoneNumber, employmentDate);
+        this.uncountedCompleteProjects = 0;
+        this.projectSalaryRate = projectSalaryRate;
+    }
+
+    @Override
+    public int getSalary() {
+        if (uncountedCompleteProjects < 1) return 0;
+        uncountedCompleteProjects--;
+        return projectSalaryRate;
+    }
+
+    @Override
+    public void work(int amount) {
+        uncountedCompleteProjects += amount;
+    }
+
+    public int getUncountedCompleteProjects() {
+        return uncountedCompleteProjects;
+    }
+
+    public void setUncountedCompleteProjects(int uncountedCompleteProjects) {
+        this.uncountedCompleteProjects = uncountedCompleteProjects;
+    }
+
+    public int getProjectSalaryRate() {
+        return projectSalaryRate;
+    }
+}
